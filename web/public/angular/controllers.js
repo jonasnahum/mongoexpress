@@ -1,6 +1,7 @@
-angular.module("controllers").
-controller("StudentsController", function($scope) {
-    //console.dir(factories.studentsFactory);
-   
+(function() {
+    var app = angular.module('app');
     
-});
+    app.controller('StudentsController', ['$http', function($http){
+       this.name = 'rodrigo';
+    }]);
+})();
