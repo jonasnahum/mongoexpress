@@ -20,6 +20,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
+    
     var alumno = alumnos({ 
         name: req.body.name, 
         age: parseInt(req.body.age, 10) 
