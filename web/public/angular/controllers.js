@@ -1,7 +1,7 @@
 (function() {
     var app = angular.module('app');
     
-    app.controller('StudentsController', ['$http', '$location', function($http, $location) {
+    app.controller('IndexController', ['$http', '$location', function($http, $location) {
         var model = this;
         model.students = [];
                 
@@ -26,7 +26,7 @@
 (function() {
     var app = angular.module('app');
     
-    app.controller('NewController', ['$http', '$location', function($http, $location) {
+    app.controller('NuevoController', ['$http', '$location', function($http, $location) {
         var model = this;
         model.name = '';
         model.age = '';
@@ -36,7 +36,6 @@
                 url: '/api/students',
                 method: "POST",
                 data: model,
-                //headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).success(function (data, status, headers, config) {
                 $location.path('/');
             }).error(function (data, status, headers, config) {
