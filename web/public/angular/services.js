@@ -2,33 +2,39 @@
     var app = angular.module("app");
     
     app.factory("ApiService", ['$http', function($http) {
-        var api = { };
-        api.url = '/api/students/';
         
-        api.error = function(data, status, headers, config, statusText) {
+        var Api = function (url){
+            this.url = url;
+        }
+        
+        Api.prototype.error = function(data, status, headers, config, statusText) {
             console.error('%s %s %s', config.method, config.url, status);
         }
         
-        api.getAll = function(success) {
+        Api.prototype.getAll = function(success) {
+            var api = this;
             var promise = $http.get(api.url);
             promise.success(success);
             promise.error(api.error);
         }
         
-        api.getOne = function(id, success) {            
+        Api.prototype.getOne = function(id, success) {         
+            var api = this;
             var promise = $http.get(api.url + id);
             promise.success(success);
             promise.error(api.error);
         }
         
-        api.delete = function(id, success) {
+        Api.prototype.delete = function(id, success) {
+            var api = this;
             $http({
                 url: api.url + id,
                 method: "DELETE",
             }).success(success).error(api.error);
         }
         
-        api.save = function(model, success) {            
+        Api.prototype.save = function(model, success) {           
+            var api = this;
             $http({
                 url: api.url,
                 method: "POST",
@@ -36,7 +42,8 @@
             }).success(success).error(api.error);
         }
         
-        api.update = function(model, success) {            
+        Api.prototype.update = function(model, success) {  
+            var api = this;
             $http({
                 url: api.url,
                 method: "PUT",
@@ -44,7 +51,7 @@
             }).success(success).error(api.error);
         }
         
-        return api;
+        return new Api('/api/students/');
         
     }]);
     
