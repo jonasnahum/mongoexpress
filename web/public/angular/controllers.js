@@ -5,9 +5,11 @@
         var model = this;
         model.students = [];
         
-        api.getAll(function(data){
-            model.students = data;
-        });
+        model.getAll = function(){
+            api.getAll(function(data){
+                model.students = data;
+            });
+        };        
         
         model.delete = function(id) {
             api.delete(id, function() {
@@ -15,6 +17,7 @@
             });
         };
         
+        model.getAll();
     }]);
 })();
 
