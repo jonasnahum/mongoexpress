@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var dbConnection = require('./middlewares/dbConnection')();
+var dbConnection = require('./database/dbConnection')();
 dbConnection.connect('mongodb://localhost/alumnos');
 
 var routes = require('./routes/index');

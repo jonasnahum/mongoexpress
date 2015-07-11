@@ -1,24 +1,19 @@
 (function() {
     var app = angular.module('app');
     
-    app.controller('IndexController', ['$http', '$location', function($http, $location) {
+    app.controller('IndexController', ['$location', 'ApiService', function($location, api) {
         var model = this;
         model.students = [];
-                
-        $http.get('/api/students').success(function(data){
+        
+        api.getAll(function(data){
             model.students = data;
         });
         
         model.delete = function(id) {
-            $http({
-                url: '/api/students/' + id,
-                method: "DELETE",
-            }).success(function (data, status, headers, config) {
+            api.delete(id, function() {
                 $location.path('/');
-            }).error(function (data, status, headers, config) {
-                console.log(status);                
             });
-        }
+        };
         
     }]);
 })();
@@ -26,56 +21,39 @@
 (function() {
     var app = angular.module('app');
     
-    app.controller('NuevoController', ['$http', '$location', function($http, $location) {
+    app.controller('NuevoController', ['$location', 'ApiService', function($location, api) {
         var model = this;
         model.name = '';
         model.age = '';
       
-        model.save = function() {            
-            $http({
-                url: '/api/students',
-                method: "POST",
-                data: model,
-            }).success(function (data, status, headers, config) {
+        model.save = function() {           
+            api.save(model, function(){
                 $location.path('/');
-            }).error(function (data, status, headers, config) {
-                console.log(status);                
             });
-        }        
+        }
     }]);
 })();
 
 (function() {
     var app = angular.module('app');
     
-    app.controller('EditarController', ['$http', '$location', '$routeParams', function($http, $location, $routeParams) {
+    app.controller('EditarController', ['ApiService', '$location', '$routeParams', function(api, $location, $params) {
         var model = this;
         model.name = '';
         model.age = '';
         model.id = 0;        
       
-        model.load = function() {            
-            $http({
-                url: '/api/students/' + $routeParams.id,
-                method: "GET",
-            }).success(function (data, status, headers, config) {
+        model.load = function() {   
+            api.getOne($params.id, function(data) {
                 model.name = data.name;
                 model.age = data.age;
                 model.id = data._id;
-            }).error(function (data, status, headers, config) {
-                console.log(status);                
             });
         }
         
-        model.update = function() {            
-            $http({
-                url: '/api/students',
-                method: "PUT",
-                data: model,
-            }).success(function (data, status, headers, config) {
+        model.update = function() {      
+            api.update(model, function(data) {
                 $location.path('/');
-            }).error(function (data, status, headers, config) {
-                console.log(status);                
             });
         }
         
@@ -86,23 +64,18 @@
 (function() {
     var app = angular.module('app');
     
-    app.controller('VerController', ['$http', '$location', '$routeParams', function($http, $location, $routeParams) {
+    app.controller('VerController', ['ApiService', '$location', '$routeParams', function(api, $location, $params) {
         var model = this;
         model.name = '';
         model.age = '';
         model.id = 0;        
       
-        model.load = function() {            
-            $http({
-                url: '/api/students/' + $routeParams.id,
-                method: "GET",
-            }).success(function (data, status, headers, config) {
+        model.load = function() {    
+            api.getOne($params.id, function(data) {
                 model.name = data.name;
                 model.age = data.age;
                 model.id = data._id;
-            }).error(function (data, status, headers, config) {
-                console.log(status);                
-            });
+            });        
         }
         
         model.load();
