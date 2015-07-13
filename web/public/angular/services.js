@@ -1,7 +1,7 @@
 (function() {
     var app = angular.module("app");
     
-    app.factory("ApiService", ['$http', function($http) {
+    app.factory("apiFactory", ['$http', function($http) {
         
         var Api = function (url){
             this.url = url;
@@ -51,8 +51,19 @@
             }).success(success).error(api.error);
         }
         
-        return new Api('/api/students/');
+        return function(url) { 
+            return new Api(url);
+        }
         
+    }]);
+    
+})();
+
+(function() {
+    var app = angular.module("app");
+    
+    app.factory("studentsApi" ['apiFactory', function(apiFactory) {
+        return apiFactory('/api/students/');
     }]);
     
 })();
