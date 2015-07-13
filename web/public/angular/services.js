@@ -62,8 +62,9 @@
 (function() {
     var app = angular.module("app");
     
-    app.factory("studentsApi" ['apiFactory', function(apiFactory) {
-        return apiFactory('/api/students/');
+    app.factory("alumnosApi", ['apiFactory', function(apiFactory) {   
+        var api = apiFactory('/api/students/');
+        return api;
     }]);
     
 })();

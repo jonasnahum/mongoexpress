@@ -1,8 +1,8 @@
 (function() {
     var app = angular.module('app');
     
-    app.controller('IndexController', ['$location', 'studentsApi', function($location, api) {        
-        
+    app.controller('IndexController', ['$location', 'alumnosApi', function($location, api) {  
+       
         var model = this;
         model.students = [];
         
@@ -25,7 +25,7 @@
 (function() {
     var app = angular.module('app');
     
-    app.controller('NuevoController', ['$location', 'studentsApi', function($location, api) {
+    app.controller('NuevoController', ['$location', 'alumnosApi', function($location, api) {
         var model = this;
         model.name = '';
         model.age = '';
@@ -41,7 +41,7 @@
 (function() {
     var app = angular.module('app');
     
-    app.controller('EditarController', ['studentsApi', '$location', '$routeParams', function(api, $location, $params) {
+    app.controller('EditarController', ['alumnosApi', '$location', '$routeParams', function(api, $location, $params) {
         var model = this;
         model.name = '';
         model.age = '';
@@ -68,7 +68,7 @@
 (function() {
     var app = angular.module('app');
     
-    app.controller('VerController', ['studentsApi', '$routeParams', function(api, $params) {
+    app.controller('VerController', ['alumnosApi', '$routeParams', function(api, $params) {
         var model = this;
         model.name = '';
         model.age = '';
