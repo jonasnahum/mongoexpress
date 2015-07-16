@@ -14,5 +14,10 @@
     "mongoose": "^4.0.6",
     "morgan": "~1.5.1",
     "serve-favicon": "~2.2.0"
+  },
+  "devDependencies": {
+    "karma": "^0.13.0",
+    "karma-firefox-launcher": "^0.1.6",
+    "karma-jasmine": "^0.1.6"
   }
 }
