@@ -1,6 +1,6 @@
 
 describe("api students", function(){
-    var url = '/api/students/';
+    var url = '/api/students/11';
     var all = [
         {name: 'rodrigo', age: 30, id: 10},
         {name: 'jonas', age: 29, id: 11},
@@ -12,14 +12,14 @@ describe("api students", function(){
     
     beforeEach(inject(function($httpBackend) {
         $httpMock = $httpBackend;
-        $httpBackend.when('GET', url).respond(all);
+        $httpBackend.when('DELETE', url).respond(true);
     }));
     
-    it('gets all', inject(function(alumnosApi) {
+    it('deletes one', inject(function(alumnosApi) {
         
-        $httpMock.expectGET(url);
-        alumnosApi.getAll(function(alumnos) {                
-            expect(alumnos).toEqual(all);
+        $httpMock.expectDELETE(url);
+        alumnosApi.delete(11, function(result) {                
+            expect(result).toEqual(true);
         });
         $httpMock.flush();
         

@@ -12,14 +12,14 @@ describe("api students", function(){
     
     beforeEach(inject(function($httpBackend) {
         $httpMock = $httpBackend;
-        $httpBackend.when('GET', url).respond(all);
+        $httpBackend.when('POST', url).respond(true);
     }));
     
-    it('gets all', inject(function(alumnosApi) {
+    it('saves', inject(function(alumnosApi) {
         
-        $httpMock.expectGET(url);
-        alumnosApi.getAll(function(alumnos) {                
-            expect(alumnos).toEqual(all);
+        $httpMock.expectPOST(url);
+        alumnosApi.save(all[1], function(result) {                
+            expect(result).toBe(true);
         });
         $httpMock.flush();
         

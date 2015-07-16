@@ -1,5 +1,5 @@
 
-describe("api students", function(){
+describe("api students", function() {
     var url = '/api/students/';
     var all = [
         {name: 'rodrigo', age: 30, id: 10},
@@ -12,14 +12,14 @@ describe("api students", function(){
     
     beforeEach(inject(function($httpBackend) {
         $httpMock = $httpBackend;
-        $httpBackend.when('GET', url).respond(all);
+        $httpBackend.when('PUT', url).respond(true);
     }));
     
-    it('gets all', inject(function(alumnosApi) {
+    it('updates', inject(function(alumnosApi) {
         
-        $httpMock.expectGET(url);
-        alumnosApi.getAll(function(alumnos) {                
-            expect(alumnos).toEqual(all);
+        $httpMock.expectPUT(url);
+        alumnosApi.update(all[1], function(result) {                
+            expect(result).toBe(true);
         });
         $httpMock.flush();
         
