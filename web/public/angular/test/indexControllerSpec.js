@@ -7,10 +7,11 @@ describe("index controller", function(){
         {name: 'jonas', age: 29, id: 11},
         {name: 'monse', age: 20, id: 12}
     ];
+    var model =  {name: 'rodrigo', age: 30, _id: 10};
     
     beforeEach(module('app')); 
     
-    var $controller, $httpMock, api, $locationMock;
+    var $controller, $httpMock, $locationMock;
 
     beforeEach(inject(function(_$controller_){
         $controller = _$controller_;
@@ -20,14 +21,15 @@ describe("index controller", function(){
         $httpMock = $httpBackend;
         $httpBackend.when('GET', url).respond(all);
         $httpBackend.when('DELETE', url + id).respond(true);
+        $httpBackend.when('POST', url).respond(true);
+        $httpBackend.when('GET', url + id).respond(model);//r.servidor
+        $httpBackend.when('PUT', url).respond(true);
+        
     }));
     
-    beforeEach(inject(function(alumnosApi) {
-        api = alumnosApi;
-    }));
-    
-    beforeEach(inject(function($location) {
+    beforeEach(inject(function($location, $routeParams) {
         $locationMock = $location;
+        $routeParams.id = id;
     }));
 
     
@@ -48,5 +50,44 @@ describe("index controller", function(){
         
         expect($locationMock.path()).toBe('/');
     });
+    it("saves on save", function(){
+        var controller = $controller("NuevoController");
+        controller.save();
+        $httpMock.expectPOST(url);
+        $httpMock.flush();
+        
+        expect($locationMock.path()).toBe('/');
+    });
+    it("edit loads model", function(){
+        var controller = $controller("EditarController");
+        
+        $httpMock.expectGET(url + id);
+        $httpMock.flush();
+        
+        expect(controller.id).toBe(model._id);
+        expect(controller.name).toBe(model.name);
+        expect(controller.age).toBe(model.age);
+    });
+    it("edits saves a model", function(){
+        var controller = $controller("EditarController");
+        controller.update();
+        $httpMock.expectPUT(url);
+        $httpMock.flush();
+        
+        expect($locationMock.path()).toBe('/');
+    });
+    it("ver shows the model", function(){
+        var controller = $controller("VerController");
+        controller.load();
+        $httpMock.expectGET(url + id);
+        $httpMock.flush();
+              
+        expect(controller.id).toBe(model._id);
+        expect(controller.name).toBe(model.name);
+        expect(controller.age).toBe(model.age);
+    });
+
+    
+
 });
 
